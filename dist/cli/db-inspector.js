@@ -274,6 +274,18 @@ Options:
         const ping = await client_1.dbClient.ping();
         if (!ping.connected) {
             err(`Connection failed: ${ping.error}`);
+            if (ping.error && ping.error.includes('Failed to connect') && ping.error.includes('ms')) {
+                console.log('\n  ┌────────────────────────────────────────────────────────────────────────┐');
+                console.log('  │ ⚠️  SQLEXPRESS NAMED INSTANCE TIMEOUT DETECTED                         │');
+                console.log('  ├────────────────────────────────────────────────────────────────────────┤');
+                console.log('  │ 1. "SQL Server Browser" service is STOPPED.                            │');
+                console.log('  │    Run in Admin Command Prompt: net start SQLBrowser                   │');
+                console.log('  │ 2. "TCP/IP" protocol is DISABLED in SQL Server Configuration Manager.  │');
+                console.log('  │    Enable TCP/IP and restart SQL Server (SQLEXPRESS).                  │');
+                console.log('  │ 3. One-Click Fix: Right-click scripts\\fix-sql-connection.bat           │');
+                console.log('  │    and select "Run as administrator".                                  │');
+                console.log('  └────────────────────────────────────────────────────────────────────────┘\n');
+            }
             process.exit(1);
         }
         ok(`SQL Server reachable (latency: ${ping.latencyMs}ms)`);

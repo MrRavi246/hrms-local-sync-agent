@@ -42,7 +42,7 @@ export class DatabaseClient {
       password: config.DB_PASSWORD,
       port: config.DB_PORT,
       options: {
-        instanceName: instanceName || undefined,
+        instanceName: config.DB_PORT ? undefined : (instanceName || undefined),
         encrypt: config.DB_ENCRYPT,
         trustServerCertificate: trustCert,
         appName: config.DB_APP_NAME || 'SQL Server Management Studio',
@@ -132,6 +132,17 @@ export class DatabaseClient {
       logger.error(
         `❌ SQL Server connection failed (Attempt #${this.connectionAttempts}): ${err.message}. Retrying in ${Math.round(backoffMs / 1000)}s...`
       );
+
+      const msg = err.message || '';
+      if (msg.includes('Failed to connect') && msg.includes('ms')) {
+        logger.warn(
+          '💡 [TROUBLESHOOTING TIP] Connection timed out while locating the SQLEXPRESS instance.\n' +
+          '   1. Ensure "SQL Server Browser" Windows service is RUNNING (Run: net start SQLBrowser)\n' +
+          '   2. Ensure TCP/IP protocol is ENABLED in SQL Server Configuration Manager\n' +
+          '   3. Or run as Administrator: scripts\\fix-sql-connection.bat'
+        );
+      }
+
       throw err;
     } finally {
       this.isConnecting = false;

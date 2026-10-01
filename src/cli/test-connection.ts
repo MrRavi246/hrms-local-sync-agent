@@ -11,6 +11,10 @@ async function testConnection() {
     console.log(`✅ SQL Server reachable (${dbPing.latencyMs}ms)`);
   } else {
     console.log(`❌ SQL Server unreachable: ${dbPing.error}`);
+    if (dbPing.error && dbPing.error.includes('Failed to connect') && dbPing.error.includes('ms')) {
+      console.log('\n  💡 TIP: SQL Server Browser service may be STOPPED or TCP/IP DISABLED.');
+      console.log('     Run as Administrator: scripts\\fix-sql-connection.bat');
+    }
   }
 
   console.log('\n2. Checking HRMS API...');
