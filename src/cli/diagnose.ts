@@ -9,11 +9,16 @@ async function runDiagnose() {
   console.log('======================================================================\n');
 
   console.log('Configuration Settings:');
+  if (config.DB_CONNECTION_STRING) {
+    console.log(`  - DB_CONNECTION_STRING: (Configured - credentials protected)`);
+  }
   console.log(`  - DB_SERVER:        ${config.DB_SERVER}`);
   console.log(`  - DB_INSTANCE:      ${config.DB_INSTANCE}`);
   console.log(`  - DB_NAME:          ${config.DB_NAME || '(Will auto-discover)'}`);
   console.log(`  - DB_USER:          ${config.DB_USER}`);
   console.log(`  - DB_PASSWORD:      ${config.DB_PASSWORD ? '********' : '(NOT CONFIGURED)'}`);
+  console.log(`  - DB_ENCRYPT:       ${config.DB_ENCRYPT}`);
+  console.log(`  - DB_TRUST_CERT:    ${config.DB_TRUST_SERVER_CERTIFICATE}`);
   console.log(`  - SOURCE_TABLE:     ${config.SOURCE_TABLE}`);
   console.log(`  - HRMS_API_URL:     ${config.HRMS_API_URL}`);
   console.log(`  - SYNC_TOKEN:       ${config.SYNC_TOKEN ? `${config.SYNC_TOKEN.slice(0, 12)}...` : '(NOT CONFIGURED)'}`);

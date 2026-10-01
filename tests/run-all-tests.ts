@@ -1,6 +1,7 @@
 import { testNormalizer } from './unit/normalizer.test';
 import { testStateManager } from './unit/state-manager.test';
 import { testApiClient } from './unit/api-client.test';
+import { testConnectionStringParser } from './unit/connection-string.test';
 import { testSyncFlow } from './integration/sync-flow.test';
 
 async function runAllTests() {
@@ -12,6 +13,10 @@ async function runAllTests() {
   let passedCount = 0;
 
   try {
+    await testConnectionStringParser();
+    passedCount++;
+    console.log();
+
     await testNormalizer();
     passedCount++;
     console.log();
