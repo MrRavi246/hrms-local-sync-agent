@@ -1,0 +1,19 @@
+[2026-10-01 16:29:14] [INFO] Loaded persistent sync state from SQLite. Last cursor: 1003
+[2026-10-01 16:29:14] [WARN] Sync cursor reset manually to: NULL (Origin)
+[2026-10-01 16:29:16] [WARN] Sync cursor reset manually to: 1000
+[2026-10-01 16:29:16] [ERROR] [HRMS API BatchSync] Remote Server Error (500): Simulated Database Failure on HRMS
+[2026-10-01 16:31:40] [INFO] Loaded persistent sync state from SQLite. Last cursor: 1003
+[2026-10-01 16:31:40] [WARN] Sync cursor reset manually to: NULL (Origin)
+[2026-10-01 16:31:40] [WARN] Sync cursor reset manually to: 1000
+[2026-10-01 16:31:40] [ERROR] [HRMS API BatchSync] Remote Server Error (500): Simulated Database Failure on HRMS
+[2026-10-01 16:31:51] [INFO] Connecting to SQL Server [DESKTOP-0424DUH\SQLEXPRESS] Database: [master] User: [sa]...
+[2026-10-01 16:31:51] [ERROR] ❌ SQL Server connection failed (Attempt #1): getaddrinfo ENOTFOUND desktop-0424duh. Retrying in 11s...
+[2026-10-01 16:31:51] [INFO] Connecting to SQL Server [DESKTOP-0424DUH\SQLEXPRESS] Database: [master] User: [sa]...
+[2026-10-01 16:31:51] [ERROR] ❌ SQL Server connection failed (Attempt #2): getaddrinfo ENOTFOUND desktop-0424duh. Retrying in 21s...
+[2026-10-01 16:31:51] [INFO] Connecting to SQL Server [DESKTOP-0424DUH\SQLEXPRESS] Database: [master] User: [sa]...
+[2026-10-01 16:31:51] [ERROR] ❌ SQL Server connection failed (Attempt #3): getaddrinfo ENOTFOUND desktop-0424duh. Retrying in 46s...
+[2026-10-01 16:31:51] [ERROR] [HRMS API Heartbeat] Client Error (404): Request failed with status code 404
+[2026-10-01 16:32:19] [INFO] Loaded persistent sync state from SQLite. Last cursor: 1003
+[2026-10-01 16:32:19] [WARN] Sync cursor reset manually to: NULL (Origin)
+[2026-10-01 16:32:20] [WARN] Sync cursor reset manually to: 1000
+[2026-10-01 16:32:20] [ERROR] [HRMS API BatchSync] Remote Server Error (500): Simulated Database Failure on HRMS

@@ -1,0 +1,16 @@
+{
+  "cursor": "1003",
+  "cursorColumn": null,
+  "cursorType": null,
+  "lastSyncAt": "2026-10-01T11:02:20.326Z",
+  "lastSuccessfulBatchCount": 3,
+  "totalRecordsSynced": 618,
+  "pendingRecords": 0,
+  "lastHeartbeatAt": null,
+  "lastError": null,
+  "lastErrorAt": "2026-10-01T11:02:19.462Z",
+  "consecutiveFailures": 0,
+  "agentStatus": "HEALTHY",
+  "seenBoundaryIds": [],
+  "updatedAt": "2026-10-01T11:02:20.326Z"
+}

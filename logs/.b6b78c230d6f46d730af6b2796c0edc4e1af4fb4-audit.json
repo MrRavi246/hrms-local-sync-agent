@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 60
+    },
+    "auditLog": "/Users/ravi/Desktop/Clients/Websites/hrms-local-sync-agent/logs/.b6b78c230d6f46d730af6b2796c0edc4e1af4fb4-audit.json",
+    "files": [
+        {
+            "date": 1790768048210,
+            "name": "/Users/ravi/Desktop/Clients/Websites/hrms-local-sync-agent/logs/error-2026-09-30.log",
+            "hash": "f175a81d7a2958b8e17b50dcecc94daefc09018b45bd0905dc277d5f8b2a5a6e"
+        },
+        {
+            "date": 1790852354823,
+            "name": "/Users/ravi/Desktop/Clients/Websites/hrms-local-sync-agent/logs/error-2026-10-01.log",
+            "hash": "b5ab532c8056e8298993758e58cd6d6c2f821ea7619c436f25ef2907935f6e95"
+        }
+    ],
+    "hashType": "sha256"
+}

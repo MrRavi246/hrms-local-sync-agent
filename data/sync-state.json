@@ -1,0 +1,16 @@
+{
+  "cursor": "1003",
+  "cursorColumn": null,
+  "cursorType": null,
+  "lastSyncAt": "2026-10-01T11:02:20.326Z",
+  "lastSuccessfulBatchCount": 3,
+  "totalRecordsSynced": 618,
+  "pendingRecords": 0,
+  "lastHeartbeatAt": null,
+  "lastError": "Request failed with status code 500",
+  "lastErrorAt": "2026-10-01T11:02:20.330Z",
+  "consecutiveFailures": 1,
+  "agentStatus": "ERROR",
+  "seenBoundaryIds": [],
+  "updatedAt": "2026-10-01T11:02:20.330Z"
+}
