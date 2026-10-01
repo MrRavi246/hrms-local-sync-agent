@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+
+# Local sensitive configuration
+.env
+.env.local
+.env.*.local
+
+# Persistent local state and logs
+data/
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

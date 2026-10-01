@@ -1,0 +1,41 @@
+{
+  "name": "hrms-local-sync-agent",
+  "version": "1.0.0",
+  "description": "Production-ready Local SQL Server Express Attendance Sync Agent for CMK HRMS",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "diagnose": "tsx src/cli/diagnose.ts",
+    "dry-run": "tsx src/index.ts --dry-run",
+    "test-connection": "tsx src/cli/test-connection.ts",
+    "db-inspect": "tsx src/cli/db-inspector.ts",
+    "test": "tsx tests/run-all-tests.ts"
+  },
+  "keywords": [
+    "hrms",
+    "biometric",
+    "sql-server",
+    "sync-agent",
+    "attendance"
+  ],
+  "author": "CMK HRMS Engineering",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.20.0",
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^18.0.4",
+    "mssql": "^12.7.2",
+    "winston": "^3.19.0",
+    "winston-daily-rotate-file": "^5.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/mssql": "^9.1.5",
+    "@types/node": "^22.9.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.6.3"
+  }
+}
