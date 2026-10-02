@@ -43,6 +43,15 @@ export class HrmsApiClient {
   private static instance: HrmsApiClient;
   private client: AxiosInstance;
   public readonly agentVersion = '1.0.0';
+  private rateLimitedUntil = 0;
+
+  public isRateLimited(): boolean {
+    return Date.now() < this.rateLimitedUntil;
+  }
+
+  public getRateLimitRemainingSeconds(): number {
+    return Math.max(0, Math.ceil((this.rateLimitedUntil - Date.now()) / 1000));
+  }
 
   private constructor() {
     this.client = axios.create({
@@ -50,12 +59,16 @@ export class HrmsApiClient {
       timeout: 30000, // 30 seconds
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': `hrms-local-sync-agent/${this.agentVersion}`,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 CMK-SyncAgent/1.0',
       },
     });
 
     // Request interceptor to attach authentication token
     this.client.interceptors.request.use((reqConfig) => {
+      if (this.isRateLimited()) {
+        const remaining = this.getRateLimitRemainingSeconds();
+        return Promise.reject(new Error(`Server cooldown active. Waiting ${remaining}s before next request.`));
+      }
       if (config.SYNC_TOKEN) {
         reqConfig.headers['X-Integration-Key'] = config.SYNC_TOKEN;
       }
@@ -158,13 +171,20 @@ export class HrmsApiClient {
         logger.error(
           `[HRMS API ${action}] 401 Unauthorized: Invalid or missing SYNC_TOKEN. Please generate a new key in HRMS Admin Suite -> Integrations.`
         );
-      } else if (axiosErr.response.status >= 500) {
-        logger.error(
-          `[HRMS API ${action}] Remote Server Error (${axiosErr.response.status}): ${axiosErr.response.data?.message || axiosErr.message}`
+      } else if (axiosErr.response.status === 403 || axiosErr.response.status === 429) {
+        // Cooldown for 5 minutes (300 seconds) to allow firewall/WAF ban to expire
+        this.rateLimitedUntil = Date.now() + 5 * 60 * 1000;
+        logger.warn(
+          `[HRMS API ${action}] ⚠️ HTTP ${axiosErr.response.status} (Rate Limit / Firewall Block). Pausing cloud requests for 5 minutes to allow IP cooldown...`
         );
       } else {
+        const resData = axiosErr.response.data;
+        const detailMsg =
+          typeof resData === 'string'
+            ? resData.slice(0, 300)
+            : resData?.message || resData?.error || JSON.stringify(resData);
         logger.error(
-          `[HRMS API ${action}] Client Error (${axiosErr.response.status}): ${axiosErr.response.data?.message || axiosErr.message}`
+          `[HRMS API ${action}] Client Error (${axiosErr.response.status}): ${detailMsg || axiosErr.message}`
         );
       }
     } else {

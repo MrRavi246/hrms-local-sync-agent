@@ -34,6 +34,9 @@ export declare class HrmsApiClient {
     private static instance;
     private client;
     readonly agentVersion = "1.0.0";
+    private rateLimitedUntil;
+    isRateLimited(): boolean;
+    getRateLimitRemainingSeconds(): number;
     private constructor();
     static getInstance(): HrmsApiClient;
     /**

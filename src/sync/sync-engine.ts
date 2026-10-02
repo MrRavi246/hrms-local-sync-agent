@@ -192,14 +192,14 @@ export class SyncEngine {
 
       logger.info(`[SyncEngine] 💾 Cursor updated safely: ${safeNextCursor}`);
 
-      // 8. If backlog exists (full batch size returned), trigger next batch immediately
+      // 8. If backlog exists (full batch size returned), drain next batch with a gentle delay
       if (rows.length === config.SYNC_BATCH_SIZE) {
-        logger.info('[SyncEngine] Full batch processed. Draining backlog immediately...');
-        setImmediate(() => {
+        logger.info('[SyncEngine] Full batch processed. Draining next batch in 3s...');
+        setTimeout(() => {
           this.runSync('drain_backlog').catch((e) =>
             logger.error(`[SyncEngine] Backlog drain error: ${e.message}`)
           );
-        });
+        }, 3000);
       }
 
       return {

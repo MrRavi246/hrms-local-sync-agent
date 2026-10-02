@@ -150,12 +150,12 @@ class SyncEngine {
                 boundaryRecordIds,
             });
             index_2.logger.info(`[SyncEngine] 💾 Cursor updated safely: ${safeNextCursor}`);
-            // 8. If backlog exists (full batch size returned), trigger next batch immediately
+            // 8. If backlog exists (full batch size returned), drain next batch with a gentle delay
             if (rows.length === index_1.config.SYNC_BATCH_SIZE) {
-                index_2.logger.info('[SyncEngine] Full batch processed. Draining backlog immediately...');
-                setImmediate(() => {
+                index_2.logger.info('[SyncEngine] Full batch processed. Draining next batch in 3s...');
+                setTimeout(() => {
                     this.runSync('drain_backlog').catch((e) => index_2.logger.error(`[SyncEngine] Backlog drain error: ${e.message}`));
-                });
+                }, 3000);
             }
             return {
                 status: 'COMPLETED',
