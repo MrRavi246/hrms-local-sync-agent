@@ -13,25 +13,39 @@ function normalizeAttendanceRecord(row, primaryKeyCol) {
         row.employeecode ??
         row.EmpCode ??
         row.empcode ??
+        row.EmpId ??
+        row.empid ??
         row.UserId ??
         row.userid ??
         row.EnrollNumber ??
+        row.EnrollNo ??
         row.CardNo ??
+        row.cardno ??
         row.Badgenumber;
     if (employeeCode === undefined || employeeCode === null || String(employeeCode).trim() === '') {
         return null;
     }
     const cleanEmpCode = String(employeeCode).trim();
-    // 2. Resolve Timestamp (LogDateTime or LogDate + LogTime)
+    // 2. Resolve Timestamp (PunchDatetime, LogDateTime, or LogDate + LogTime)
     let parsedDate = null;
-    const rawDateTime = row.LogDateTime ?? row.logdatetime ?? row.LogDateTime2 ?? row.DownloadDateTime;
+    const rawDateTime = row.PunchDatetime ??
+        row.PunchDateTime ??
+        row.punchdatetime ??
+        row.PunchDate ??
+        row.punchdate ??
+        row.LogDateTime ??
+        row.logdatetime ??
+        row.LogDateTime2 ??
+        row.DownloadDateTime;
     if (rawDateTime) {
         parsedDate = rawDateTime instanceof Date ? rawDateTime : new Date(rawDateTime);
     }
-    else if (row.LogDate && row.LogTime) {
+    else if ((row.LogDate || row.PunchDate) && (row.LogTime || row.PunchTime)) {
         // Combine separate date and time columns
-        const dateStr = row.LogDate instanceof Date ? row.LogDate.toISOString().split('T')[0] : String(row.LogDate).trim();
-        const timeStr = row.LogTime instanceof Date ? row.LogTime.toTimeString().split(' ')[0] : String(row.LogTime).trim();
+        const dVal = row.LogDate || row.PunchDate;
+        const tVal = row.LogTime || row.PunchTime;
+        const dateStr = dVal instanceof Date ? dVal.toISOString().split('T')[0] : String(dVal).trim();
+        const timeStr = tVal instanceof Date ? tVal.toTimeString().split(' ')[0] : String(tVal).trim();
         parsedDate = new Date(`${dateStr} ${timeStr}`);
     }
     if (!parsedDate || isNaN(parsedDate.getTime())) {
@@ -40,7 +54,7 @@ function normalizeAttendanceRecord(row, primaryKeyCol) {
     const formattedDateTime = parsedDate.toISOString();
     // 3. Resolve Direction ('In' or 'Out')
     let direction;
-    const rawDirection = String(row.Direction ?? row.direction ?? row.Type ?? '').trim().toLowerCase();
+    const rawDirection = String(row.Direction ?? row.direction ?? row.InOut ?? row.inout ?? row.Type ?? '').trim().toLowerCase();
     if (rawDirection === 'in' || rawDirection === '1' || rawDirection === 'checkin' || rawDirection === 'i') {
         direction = 'In';
     }
